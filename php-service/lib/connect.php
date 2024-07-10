@@ -1,8 +1,8 @@
 <?php
 
 $servername= "localhost";
-$username = "uvette";
-$dbname= "my_uvette";
+$username = "fcolpani";
+$dbname= "my_fcolpani";
 $password = null;
 
 try {
@@ -11,6 +11,6 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 } catch(PDOException$e) {
-    echo "DB Error: " . $e->getMessage();
+    json_response(500, ["error" => $e->getMessage()]);
     die();
 }
