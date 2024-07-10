@@ -14,12 +14,12 @@ function getCreateStatement($conn,$table_name){
     return null;
 }
 
-function convertMysqlToPostgres($mysqlCreateStatement) {
-    // Mappa dei tipi di dati MySQL a PostgreSQL
+function convertMySQLToPostgres($mysqlCreateStatement) {
+    //mappa dei tipi di dati MySQL a PostgreSQL
     $dataTypeMapping = [
         '/\bint\b/' => 'integer',
         '/\bsmallint\b/' => 'smallint',
-        '/\btinyint\b/' => 'smallint', // Non c'è un tinyint in PostgreSQL, quindi si può mappare a smallint
+        '/\btinyint\b/' => 'smallint',
         '/\bmediumint\b/' => 'integer',
         '/\bbigint\b/' => 'bigint',
         '/\bvarchar\((\d+)\)\b/' => 'varchar($1)',
@@ -36,34 +36,31 @@ function convertMysqlToPostgres($mysqlCreateStatement) {
         '/\byear\b/' => 'integer'
     ];
 
-    // Rimuove ENGINE, CHARSET e COLLATE
+    //rimuove ENGINE, CHARSET e COLLATE dalla query
     $mysqlCreateStatement = preg_replace(
         ['/ENGINE=\w+/', '/DEFAULT CHARSET=\w+/', '/COLLATE=\w+/', '/AUTO_INCREMENT=\w+/'],
         '',
         $mysqlCreateStatement
     );
 
-    // Rimuove eventuali spazi in più
+    //rimuove eventuali spazi in più
     $mysqlCreateStatement = preg_replace('/\s+/', ' ', $mysqlCreateStatement);
 
-    // Sostituzione dei tipi di dati
+    //sostituzione dei tipi di dati
     foreach ($dataTypeMapping as $mysqlType => $postgresType) {
         $mysqlCreateStatement = preg_replace($mysqlType, $postgresType, $mysqlCreateStatement);
     }
-
-    // Rimuove AUTO_INCREMENT (in PostgreSQL si usa SERIAL per colonne con auto-incremento)
     $mysqlCreateStatement = preg_replace('/\bAUTO_INCREMENT\b/', '', $mysqlCreateStatement);
-
-    // Restituisce lo statement convertito
     return trim($mysqlCreateStatement);
 }
 
+//lettura parametro
 $table_param=$_GET["table"];
 
 $statement=getCreateStatement($conn, $table_param);
 
 if($statement){
-    json_response(200, ["statement"=>convertMysqlToPostgres($statement),"statementmy"=>$statement]);
+    json_response(200, ["statement"=>convertMySQLToPostgres($statement)]);
 }else{
     json_response(400, ["error"=>"table doesn't exist"]);
 }
