@@ -19,7 +19,7 @@ function convertMysqlToPostgres($mysqlCreateStatement) {
     $dataTypeMapping = [
         '/\bint\b/' => 'integer',
         '/\bsmallint\b/' => 'smallint',
-        '/\btinyint\b/' => 'smallint', // Non c'è un tinyint in PostgreSQL, quindi si può mappare a smallint
+        '/\btinyint\b/' => 'smallint',
         '/\bmediumint\b/' => 'integer',
         '/\bbigint\b/' => 'bigint',
         '/\bvarchar\((\d+)\)\b/' => 'varchar($1)',
@@ -52,7 +52,7 @@ function convertMysqlToPostgres($mysqlCreateStatement) {
     }
 
     // Rimuove AUTO_INCREMENT (in PostgreSQL si usa SERIAL per colonne con auto-incremento)
-    $mysqlCreateStatement = preg_replace('/\bAUTO_INCREMENT\b/', '', $mysqlCreateStatement);
+    $mysqlCreateStatement = preg_replace('/\bAUTO_INCREMENT\b/', 'SERIAL', $mysqlCreateStatement);
 
     // Restituisce lo statement convertito
     return trim($mysqlCreateStatement);
