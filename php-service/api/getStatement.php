@@ -19,7 +19,7 @@ function convertMysqlToPostgres($mysqlCreateStatement) {
     $dataTypeMapping = [
         '/\bint\b/' => 'integer',
         '/\bsmallint\b/' => 'smallint',
-        '/\btinyint\b/' => 'smallint',
+        '/\btinyint\b/' => 'smallint', // Non c'è un tinyint in PostgreSQL, quindi si può mappare a smallint
         '/\bmediumint\b/' => 'integer',
         '/\bbigint\b/' => 'bigint',
         '/\bvarchar\((\d+)\)\b/' => 'varchar($1)',
@@ -38,7 +38,7 @@ function convertMysqlToPostgres($mysqlCreateStatement) {
 
     // Rimuove ENGINE, CHARSET e COLLATE
     $mysqlCreateStatement = preg_replace(
-        ['/ENGINE=\w+/', '/DEFAULT CHARSET=\w+/', '/COLLATE=\w+/'],
+        ['/ENGINE=\w+/', '/DEFAULT CHARSET=\w+/', '/COLLATE=\w+/', '/AUTO_INCREMENT=\w+/'],
         '',
         $mysqlCreateStatement
     );
