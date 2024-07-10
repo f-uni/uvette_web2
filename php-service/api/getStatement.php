@@ -52,7 +52,7 @@ function convertMysqlToPostgres($mysqlCreateStatement) {
     }
 
     // Rimuove AUTO_INCREMENT (in PostgreSQL si usa SERIAL per colonne con auto-incremento)
-    $mysqlCreateStatement = preg_replace('/\bAUTO_INCREMENT\b/', 'SERIAL', $mysqlCreateStatement);
+    $mysqlCreateStatement = preg_replace('/\bAUTO_INCREMENT\b/', '', $mysqlCreateStatement);
 
     // Restituisce lo statement convertito
     return trim($mysqlCreateStatement);
