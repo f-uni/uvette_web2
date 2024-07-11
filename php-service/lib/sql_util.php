@@ -41,6 +41,7 @@ function getTable($conn, $tables, $table_name){
 			
 			if(!empty($result["rows"])){
 				//fetch colonne
+				$stmt->execute();
 				print_r($stmt->fetchAll(PDO::FETCH_ASSOC));
 				$result["cols"] = array_keys($stmt->fetchAll(PDO::FETCH_ASSOC)[0]);
 				return $result;
