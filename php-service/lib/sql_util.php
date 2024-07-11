@@ -27,8 +27,7 @@ function getTable($conn, $tables, $table_name){
 		if($table[0]==$table_name){
 			$stmt = $conn->prepare("SELECT * FROM $table_name");
 			$stmt->execute();
-			$result["rows"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-			print_r($stmt->fetchAll(PDO::FETCH_COLUMN));
+			$result["rows"] = $stmt->fetchAll(PDO::FETCH_NUM);
 			break;
 		}
 	}
