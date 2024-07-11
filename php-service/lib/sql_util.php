@@ -8,9 +8,7 @@ function getCreateStatement($conn, $tables, $table_name){
 
 	foreach($conn->query('show tables') as $table) {
 		if($table[0]==$table_name){
-			$stmt = $conn->prepare("show create table {:tb}", [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
-			$stmt->execute([':tb' => $table[0]]);
-			foreach ($stmt->fetchAll() as $row) {
+			foreach ($conn->query("show create table $table_name") as $row) {
 				return str_replace("`", "", $row['Create Table']);
 			}
 		}
@@ -25,7 +23,17 @@ function getTable($conn, $tables, $table_name){
 
 	$result=[];
 
+	foreach($conn->query('show tables') as $table) {
+		if($table[0]==$table_name){
+			$stmt = $conn->prepare("SELECT * FROM $table_name");
+			$stmt->execute();
+			$result["rows"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			print_r($stmt->fetchAll(PDO::FETCH_COLUMN));
+			break;
+		}
+	}
 
+	return $result;
 }
 
 // funzione per convertire query in sintassi MySQL in sintassi PostgreSQL 
