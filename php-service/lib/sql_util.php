@@ -3,10 +3,12 @@
 //funzione che restituisce il create statement della tabella desiderata
 function getCreateStatement($conn, $tables, $table_name){
 
+	//controllo se la tabella desiderata è nella lista di quelle autorizzate
 	if(!in_array($table_name, $tables))
 		return null;
 
 	foreach($conn->query('show tables') as $table) {
+		//se esiste la tabella nel db
 		if($table[0]==$table_name){
 			foreach ($conn->query("show create table $table_name") as $row) {
 				return str_replace("`", "", $row['Create Table']);
@@ -17,22 +19,43 @@ function getCreateStatement($conn, $tables, $table_name){
 	return null;
 }
 
+//funzione che restituisce righe e colonne della tabella desiderata
 function getTable($conn, $tables, $table_name){
+
+	//controllo se la tabella desiderata è nella lista di quelle autorizzate
 	if(!in_array($table_name, $tables))
 		return null;
 
 	$result=[];
 
 	foreach($conn->query('show tables') as $table) {
+		//se esiste la tabella nel db
 		if($table[0]==$table_name){
+			//seleziono il database corrente
+			$database = $conn->query('SELECT DATABASE()')->fetchColumn();
+
+			$sql = "SELECT COLUMN_NAME 
+                FROM information_schema.COLUMNS 
+                WHERE TABLE_SCHEMA = :database 
+                AND TABLE_NAME = :table";
+
+			//fetch colonne
+			$stmt = $conn->prepare($sql);
+			$stmt->bindParam(':database', $database);
+			$stmt->bindParam(':table', $table_name);
+			$stmt->execute();
+			$result["cols"] = $stmt->fetchAll(PDO::FETCH_COLUMN);
+			
+			//fetch righe
 			$stmt = $conn->prepare("SELECT * FROM $table_name");
 			$stmt->execute();
 			$result["rows"] = $stmt->fetchAll(PDO::FETCH_NUM);
-			break;
+			
+			return $result;
 		}
 	}
 
-	return $result;
+	return null;
 }
 
 // funzione per convertire query in sintassi MySQL in sintassi PostgreSQL 
@@ -58,17 +81,17 @@ function convertMySQLToPostgres($mysqlCreateStatement) {
 		'/\byear\b/' => 'integer'
 	];
 
-	//rimuove ENGINE, CHARSET e COLLATE dalla query
+	//rimuovo ENGINE, CHARSET e COLLATE dalla query
 	$mysqlCreateStatement = preg_replace(
 		['/ENGINE=\w+/', '/DEFAULT CHARSET=\w+/', '/COLLATE=\w+/', '/AUTO_INCREMENT=\w+/'],
 		'',
 		$mysqlCreateStatement
 	);
 
-	//rimuove eventuali spazi in più
+	//rimuovo eventuali spazi in più
 	$mysqlCreateStatement = preg_replace('/\s+/', ' ', $mysqlCreateStatement);
 
-	//sostituzione dei tipi di dati
+	//sostituisco dei tipi di dati
 	foreach ($dataTypeMapping as $mysqlType => $postgresType) {
 		$mysqlCreateStatement = preg_replace($mysqlType, $postgresType, $mysqlCreateStatement);
 	}
