@@ -2,6 +2,9 @@
 
 $tables=[
     "domanda",
-    "utente",
-    "quiz"
+    "partecipazione",
+    "quiz",
+    "risposta",
+    "risposta_utente_quiz",
+    "utente"
 ];

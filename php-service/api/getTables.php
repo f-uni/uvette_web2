@@ -3,14 +3,7 @@
 include "../lib/connect.php";
 include "../lib/response.php";
 
+include "../config.php";
+
 //lista di tabelle esportabili
-return json_response(200, [
-    "tables"=>[
-        "domanda",
-        "partecipazione",
-        "quiz",
-        "risposta",
-        "risposta_utente_quiz",
-        "utente"
-    ]
-]);
+return json_response(200, ["tables"=>$tables]);
