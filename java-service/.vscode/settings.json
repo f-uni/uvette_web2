@@ -1,0 +1,18 @@
+{
+    "java.project.sourcePaths": [
+        "WEB-INF\\classes"
+    ],
+    "java.dependency.packagePresentation": "hierarchical",
+    "java.project.referencedLibraries": [
+        "WEB-INF\\lib\\gson-2.8.2.jar",
+        "WEB-INF\\lib\\servlet-api.jar"
+    ],
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": "\\.java$",
+                "cmd": "javac  -cp \"WEB-INF/lib/*\" WEB-INF/classes/*.java"
+            }
+        ]
+    }
+}
