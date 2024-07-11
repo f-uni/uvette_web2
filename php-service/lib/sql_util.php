@@ -13,6 +13,7 @@ function getCreateStatement($conn, $tables, $table_name){
 			foreach ($conn->query("show create table $table_name") as $row) {
 				return str_replace("`", "", $row['Create Table']);
 			}
+			break;
 		}
 	}
 	
@@ -31,27 +32,17 @@ function getTable($conn, $tables, $table_name){
 	foreach($conn->query('show tables') as $table) {
 		//se esiste la tabella nel db
 		if($table[0]==$table_name){
-			//seleziono il database corrente
-			$database = $conn->query('SELECT DATABASE()')->fetchColumn();
-
-			$sql = "SELECT COLUMN_NAME 
-                FROM information_schema.COLUMNS 
-                WHERE TABLE_SCHEMA = :database 
-                AND TABLE_NAME = :table";
-
-			//fetch colonne
-			$stmt = $conn->prepare($sql);
-			$stmt->bindParam(':database', $database);
-			$stmt->bindParam(':table', $table_name);
-			$stmt->execute();
-			$result["cols"] = $stmt->fetchAll(PDO::FETCH_COLUMN);
-			
 			//fetch righe
 			$stmt = $conn->prepare("SELECT * FROM $table_name");
 			$stmt->execute();
 			$result["rows"] = $stmt->fetchAll(PDO::FETCH_NUM);
 			
-			return $result;
+			if(!empty($result["rows"])){
+				//fetch colonne
+				$result["cols"] = array_keys($stmt->fetchAll(PDO::FETCH_ASSOC)[0]);
+				return $result;
+			}
+			break;
 		}
 	}
 
