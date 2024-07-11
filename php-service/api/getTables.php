@@ -7,7 +7,10 @@ include "../lib/response.php";
 return json_response(200, [
     "tables"=>[
         "domanda",
+        "partecipazione",
         "quiz",
+        "risposta",
+        "risposta_utente_quiz",
         "utente"
     ]
 ]);

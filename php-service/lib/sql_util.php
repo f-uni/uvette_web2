@@ -11,6 +11,7 @@ function getCreateStatement($conn, $tables, $table_name){
 		//se esiste la tabella nel db
 		if($table[0]==$table_name){
 			foreach ($conn->query("show create table $table_name") as $row) {
+				//ritorno create statement
 				return str_replace("`", "", $row['Create Table']);
 			}
 			break;
