@@ -25,5 +25,5 @@ if($statement){
         json_response(400, ["error"=>"empty table"]);
     }
 }else{
-    json_response(400, ["error"=>"table doesn't exist"]);
+    json_response(400, ["error"=>"table does not exist"]);
 }
