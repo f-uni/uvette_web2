@@ -15,14 +15,11 @@ $table_param=$_GET["table"];
 $statement=getCreateStatement($conn, $tables, $table_param);
 
 if($statement){
-    $cols=getTableColumns($conn, $tables, $table_param);
-    $rows=getTableRows($conn, $tables, $table_param);
+    //$data=getTable($conn, $tables, $table_param);
 
     json_response(200, [
         "table" => $table_param,
-        "statement" => convertMySQLToPostgres($statement),
-        "columns" => $cols,
-        "rows" => $rows
+        "statement" => convertMySQLToPostgres($statement)
     ]);
 }else{
     json_response(400, ["error"=>"table doesn't exist"]);

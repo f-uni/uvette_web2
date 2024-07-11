@@ -1,5 +1,6 @@
 <?php
 
+//funzione che restituisce il create statement della tabella desiderata
 function getCreateStatement($conn, $tables, $table_name){
 
     if(!in_array($table_name, $tables))
@@ -25,10 +26,6 @@ function getTable($conn, $tables, $table_name){
     $result=[];
 
 
-}
-function getTableRows($conn,  $tables, $table_name){
-    if(!in_array($table_name, $tables))
-    return null;
 }
 
 // funzione per convertire query in sintassi MySQL in sintassi PostgreSQL 
