@@ -1,31 +1,223 @@
 {
-    "table":  "table_name",
-    "create-statement":"CREATE TABLE...",
-    "cols":["quiz", "numero", "testo"],
-    "rows":[
-        [1, 1, "Qual è il paese più grande del mondo per superficie?"],
-        [1, 2, "Qual è la capitale del Giappone?"],
-        [1, 3, "Qual è il fiume più lungo del mondo?"],
-        [1, 4, "Che catena montuosa separa l\"Europa dall\"Asia?"],
-        [1, 5, "Qual è il lago più profondo del mondo?"],
-        [1, 6, "Qual è la città più popolosa del mondo?"],
-        [1, 7, "Qual è il deserto più grande del mondo?"],
-        [1, 8, "Qual è la più grande isola del mondo?"],
-        [1, 9, "Qual è il più grande oceano del mondo?"],
-        [1, 10, "Qual è la catena montuosa più alta del mondo?"],
-        [2, 1, "Quale civiltà costruì le piramidi di Giza?"],
-        [2, 2, "Chi fu il primo imperatore romano?"],
-        [2, 3, "Quale civiltà antica ha creato la prima forma di democrazia?"],
-        [2, 4, "Chi fu il primo imperatore dell\"Impero Persiano?"],
-        [2, 5, "Qual è stata la prima civiltà a utilizzare la scrittura?"],
-        [2, 6, "Quale evento segnò la caduta dell\"Impero Romano d\"Occidente?"],
-        [2, 7, "Chi era il famoso condottiero cartaginese che combatté contro Roma?"],
-        [2, 8, "Quale civiltà antica costruì la Grande Muraglia?"],
-        [2, 9, "Quale evento segnò la fine della dinastia Qing in Cina?"],
-        [2, 10, "Chi era il primo imperatore dell\"antica Roma?"],
-        [3, 1, "Quanto fa 2+2?"],
-        [3, 2, "Cosa indica il simbolo π?"],
-        [3, 3, "Cosa è l\"ipotenusa di un triangolo rettangolo?"],
-        [3, 4, "Cosa è la radice quadrata di 16?"]
+    "table": "quiz",
+    "statement": "CREATE TABLE quiz ( codice integer NOT NULL , creatore varchar(25) NOT NULL, titolo varchar(100) NOT NULL, data_inizio timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, data_fine timestamp NOT NULL, PRIMARY KEY (codice) )",
+    "columns": [
+        "codice",
+        "creatore",
+        "titolo",
+        "data_inizio",
+        "data_fine"
+    ],
+    "rows": [
+        [
+            "1",
+            "rposchelo8",
+            "Geografia del Mondo",
+            "2024-03-28 01:30:55",
+            "2025-03-28 01:30:55"
+        ],
+        [
+            "2",
+            "ydyson58",
+            "Storia Antica",
+            "2024-01-12 17:07:17",
+            "2025-01-12 17:07:17"
+        ],
+        [
+            "3",
+            "ahollymanbw",
+            "Matematica Elementare",
+            "2024-03-14 08:22:03",
+            "2025-03-14 08:22:03"
+        ],
+        [
+            "4",
+            "gsteen5m",
+            "Letteratura Classica",
+            "2024-01-03 00:41:20",
+            "2025-01-03 00:41:20"
+        ],
+        [
+            "5",
+            "mgristwoodmk",
+            "Scienze Naturali: Biologia",
+            "2024-01-15 00:23:05",
+            "2025-01-15 00:23:05"
+        ],
+        [
+            "6",
+            "eyeldhamfo",
+            "Quiz sul Cinema",
+            "2024-02-12 13:38:59",
+            "2025-02-12 13:38:59"
+        ],
+        [
+            "7",
+            "ekedge5y",
+            "Arte e Pittura",
+            "2024-01-06 11:14:35",
+            "2025-01-06 11:14:35"
+        ],
+        [
+            "8",
+            "ebettleygy",
+            "Politica Internazionale",
+            "2024-02-24 13:53:12",
+            "2025-02-24 13:53:12"
+        ],
+        [
+            "9",
+            "tflawshp",
+            "Musica Classica",
+            "2024-01-06 22:20:11",
+            "2025-01-06 22:20:11"
+        ],
+        [
+            "10",
+            "daujeanq8",
+            "Cucina del Mondo",
+            "2024-01-20 15:37:08",
+            "2025-01-20 15:37:08"
+        ],
+        [
+            "11",
+            "gcullrfordo0",
+            "Tecnologia Moderna",
+            "2024-01-24 02:36:08",
+            "2025-01-24 02:36:08"
+        ],
+        [
+            "12",
+            "sdawby81",
+            "Quiz Sportivo",
+            "2024-02-22 09:21:28",
+            "2025-02-22 09:21:28"
+        ],
+        [
+            "13",
+            "aperrettd4",
+            "Cultura Pop",
+            "2024-01-11 16:56:57",
+            "2025-01-11 16:56:57"
+        ],
+        [
+            "14",
+            "mtschierschhd",
+            "Linguistica e Lingue Straniere",
+            "2024-03-29 17:56:09",
+            "2025-03-29 17:56:09"
+        ],
+        [
+            "15",
+            "aeckleyjz",
+            "Quiz di Astronomia",
+            "2024-01-09 11:13:50",
+            "2025-01-09 11:13:50"
+        ],
+        [
+            "16",
+            "dspencleygv",
+            "Filosofia e Pensiero",
+            "2024-01-23 04:36:38",
+            "2025-01-23 04:36:38"
+        ],
+        [
+            "17",
+            "anayeran",
+            "Quiz sulle Serie TV",
+            "2024-01-19 03:45:03",
+            "2025-01-19 03:45:03"
+        ],
+        [
+            "18",
+            "glearmang0",
+            "Storia dell'Arte",
+            "2024-03-02 06:20:03",
+            "2025-03-02 06:20:03"
+        ],
+        [
+            "19",
+            "kkerwen6v",
+            "Scienze Politiche",
+            "2024-03-13 07:39:19",
+            "2025-03-13 07:39:19"
+        ],
+        [
+            "20",
+            "dorrocksi9",
+            "Quiz sui Fumetti",
+            "2024-01-31 04:52:06",
+            "2025-01-31 04:52:06"
+        ],
+        [
+            "21",
+            "tlipyeatfu",
+            "Economia Globale",
+            "2024-02-22 17:24:07",
+            "2025-02-22 17:24:07"
+        ],
+        [
+            "22",
+            "kstrettlemy",
+            "Scienza e Tecnologia Antica",
+            "2024-03-01 14:21:46",
+            "2025-03-01 14:21:46"
+        ],
+        [
+            "23",
+            "ekean9u",
+            "Letteratura Contemporanea",
+            "2024-03-25 10:05:49",
+            "2025-03-25 10:05:49"
+        ],
+        [
+            "24",
+            "sbrydon86",
+            "Quiz Geologico",
+            "2024-01-29 19:10:26",
+            "2025-01-29 19:10:26"
+        ],
+        [
+            "25",
+            "kmablestone9s",
+            "Storia della Musica",
+            "2024-02-19 09:16:06",
+            "2025-02-19 09:16:06"
+        ],
+        [
+            "26",
+            "lseivwrightf6",
+            "Politica Nazionale",
+            "2024-02-10 12:26:51",
+            "2025-02-10 12:26:51"
+        ],
+        [
+            "27",
+            "apruvostig",
+            "Quiz di Chimica",
+            "2024-02-10 22:57:52",
+            "2025-02-10 22:57:52"
+        ],
+        [
+            "28",
+            "ddrummondg1",
+            "Scienze Ambientali",
+            "2024-03-01 15:55:36",
+            "2025-03-01 15:55:36"
+        ],
+        [
+            "29",
+            "ddrummondg1",
+            "Psicologia Moderna",
+            "2024-01-11 13:48:59",
+            "2025-01-11 13:48:59"
+        ],
+        [
+            "30",
+            "rferycy",
+            "Quiz su Animali",
+            "2024-01-18 15:54:09",
+            "2025-01-18 15:54:09"
+        ]
     ]
 }
