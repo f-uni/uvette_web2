@@ -1,0 +1,31 @@
+{
+    "table":  "table_name",
+    "create-statement":"CREATE TABLE...",
+    "cols":["quiz", "numero", "testo"],
+    "rows":[
+        [1, 1, "Qual è il paese più grande del mondo per superficie?"],
+        [1, 2, "Qual è la capitale del Giappone?"],
+        [1, 3, "Qual è il fiume più lungo del mondo?"],
+        [1, 4, "Che catena montuosa separa l\"Europa dall\"Asia?"],
+        [1, 5, "Qual è il lago più profondo del mondo?"],
+        [1, 6, "Qual è la città più popolosa del mondo?"],
+        [1, 7, "Qual è il deserto più grande del mondo?"],
+        [1, 8, "Qual è la più grande isola del mondo?"],
+        [1, 9, "Qual è il più grande oceano del mondo?"],
+        [1, 10, "Qual è la catena montuosa più alta del mondo?"],
+        [2, 1, "Quale civiltà costruì le piramidi di Giza?"],
+        [2, 2, "Chi fu il primo imperatore romano?"],
+        [2, 3, "Quale civiltà antica ha creato la prima forma di democrazia?"],
+        [2, 4, "Chi fu il primo imperatore dell\"Impero Persiano?"],
+        [2, 5, "Qual è stata la prima civiltà a utilizzare la scrittura?"],
+        [2, 6, "Quale evento segnò la caduta dell\"Impero Romano d\"Occidente?"],
+        [2, 7, "Chi era il famoso condottiero cartaginese che combatté contro Roma?"],
+        [2, 8, "Quale civiltà antica costruì la Grande Muraglia?"],
+        [2, 9, "Quale evento segnò la fine della dinastia Qing in Cina?"],
+        [2, 10, "Chi era il primo imperatore dell\"antica Roma?"],
+        [3, 1, "Quanto fa 2+2?"],
+        [3, 2, "Cosa indica il simbolo π?"],
+        [3, 3, "Cosa è l\"ipotenusa di un triangolo rettangolo?"],
+        [3, 4, "Cosa è la radice quadrata di 16?"]
+    ]
+}
