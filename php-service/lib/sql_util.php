@@ -28,11 +28,12 @@ function getTable($conn, $tables, $table_name){
 	if(!in_array($table_name, $tables))
 		return null;
 
-	$result=[];
-
 	foreach($conn->query('show tables') as $table) {
 		//se esiste la tabella nel db
 		if($table[0]==$table_name){
+			
+			$result=[];
+
 			//fetch righe
 			$stmt = $conn->prepare("SELECT * FROM $table_name");
 			$stmt->execute();
@@ -41,6 +42,7 @@ function getTable($conn, $tables, $table_name){
 			if(!empty($result["rows"])){
 				//fetch colonne
 				$result["cols"] = array_keys($stmt->fetchAll(PDO::FETCH_ASSOC)[0]);
+
 				return $result;
 			}
 			break;
