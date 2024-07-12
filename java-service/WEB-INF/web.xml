@@ -13,7 +13,7 @@
   <!-- Parametri del serivzio -->
   <context-param>
     <param-name>PHP_SERVICE_URL</param-name>
-    <param-value>https://fcolpani.altervista.org/api</param-value>
+    <param-value>https://uvette.altervista.org/php-service/api</param-value>
   </context-param>
   <context-param>
     <param-name>PYTHON_SERVICE_URL</param-name>
