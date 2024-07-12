@@ -5,15 +5,13 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 
-
 import psycopg2
 from psycopg2 import sql
-
 
 def index(request):
 	return HttpResponse("<html><body><p>Python Service</p></body></html>")
 
-@csrf_exempt
+@csrf_exempt #disabilito i controlli csrf per l'invio di dati in POST
 def importTable(request):
 
 	if request.method == "POST":
