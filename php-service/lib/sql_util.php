@@ -55,41 +55,45 @@ function getTable($conn, $tables, $table_name){
 
 // funzione per convertire query in sintassi MySQL in sintassi PostgreSQL 
 function convertMySQLToPostgres($mysqlCreateStatement) {
-	//mappa dei tipi di dati MySQL a PostgreSQL
-	$dataTypeMapping = [
-		'/\bint\b/' => 'integer',
-		'/\bsmallint\b/' => 'smallint',
-		'/\btinyint\b/' => 'smallint',
-		'/\bmediumint\b/' => 'integer',
-		'/\bbigint\b/' => 'bigint',
-		'/\bvarchar\((\d+)\)\b/' => 'varchar($1)',
-		'/\bchar\((\d+)\)\b/' => 'char($1)',
-		'/\btext\b/' => 'text',
-		'/\bblob\b/' => 'bytea',
-		'/\bfloat\b/' => 'real',
-		'/\bdouble\b/' => 'double precision',
-		'/\bdecimal\((\d+),(\d+)\)\b/' => 'numeric($1,$2)',
-		'/\btimestamp\b/' => 'timestamp',
-		'/\bdatetime\b/' => 'timestamp',
-		'/\bdate\b/' => 'date',
-		'/\btime\b/' => 'time',
-		'/\byear\b/' => 'integer'
-	];
+    // Mappa dei tipi di dati MySQL a PostgreSQL
+    $dataTypeMapping = [
+        '/\bint\b/' => 'integer',
+        '/\bsmallint\b/' => 'smallint',
+        '/\btinyint\b/' => 'smallint',
+        '/\bmediumint\b/' => 'integer',
+        '/\bbigint\b/' => 'bigint',
+        '/\bvarchar\((\d+)\)\b/' => 'varchar($1)',
+        '/\bchar\((\d+)\)\b/' => 'char($1)',
+        '/\btext\b/' => 'text',
+        '/\bblob\b/' => 'bytea',
+        '/\bfloat\b/' => 'real',
+        '/\bdouble\b/' => 'double precision',
+        '/\bdecimal\((\d+),(\d+)\)\b/' => 'numeric($1,$2)',
+        '/\btimestamp\b/' => 'timestamp',
+        '/\bdatetime\b/' => 'timestamp',
+        '/\bdate\b/' => 'date',
+        '/\btime\b/' => 'time',
+        '/\byear\b/' => 'integer',
+        '/\benum\((.*?)\)/' => 'text'
+    ];
 
-	//rimuovo ENGINE, CHARSET e COLLATE dalla query
-	$mysqlCreateStatement = preg_replace(
-		['/ENGINE=\w+/', '/DEFAULT CHARSET=\w+/', '/COLLATE=\w+/', '/AUTO_INCREMENT=\w+/'],
-		'',
-		$mysqlCreateStatement
-	);
+    // Rimuovo ENGINE, CHARSET e COLLATE dalla query
+    $mysqlCreateStatement = preg_replace(
+        ['/ENGINE=\w+/', '/DEFAULT CHARSET=\w+/', '/COLLATE=\w+/', '/AUTO_INCREMENT=\w+/'],
+        '',
+        $mysqlCreateStatement
+    );
 
-	//rimuovo eventuali spazi in più
-	$mysqlCreateStatement = preg_replace('/\s+/', ' ', $mysqlCreateStatement);
+    // Rimuovo eventuali spazi in più
+    $mysqlCreateStatement = preg_replace('/\s+/', ' ', $mysqlCreateStatement);
 
-	//sostituisco dei tipi di dati
-	foreach ($dataTypeMapping as $mysqlType => $postgresType) {
-		$mysqlCreateStatement = preg_replace($mysqlType, $postgresType, $mysqlCreateStatement);
-	}
-	$mysqlCreateStatement = preg_replace('/\bAUTO_INCREMENT\b/', '', $mysqlCreateStatement);
-	return trim($mysqlCreateStatement);
+    // Sostituisco i tipi di dati
+    foreach ($dataTypeMapping as $mysqlType => $postgresType) {
+        $mysqlCreateStatement = preg_replace($mysqlType, $postgresType, $mysqlCreateStatement);
+    }
+
+    // Rimuovo AUTO_INCREMENT rimasto
+    $mysqlCreateStatement = preg_replace('/\bAUTO_INCREMENT\b/', '', $mysqlCreateStatement);
+
+    return trim($mysqlCreateStatement);
 }
