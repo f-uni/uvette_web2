@@ -53,9 +53,9 @@ function getTable($conn, $tables, $table_name){
 	return null;
 }
 
-// funzione per convertire query in sintassi MySQL in sintassi PostgreSQL 
+//funzione per convertire query in sintassi MySQL in sintassi PostgreSQL 
 function convertMySQLToPostgres($mysqlCreateStatement) {
-    // Mappa dei tipi di dati MySQL a PostgreSQL
+    //mappa dei tipi di dati MySQL a PostgreSQL
     $dataTypeMapping = [
         '/\bint\b/' => 'integer',
         '/\bsmallint\b/' => 'smallint',
@@ -77,22 +77,22 @@ function convertMySQLToPostgres($mysqlCreateStatement) {
         '/\benum\((.*?)\)/' => 'text'
     ];
 
-    // Rimuovo ENGINE, CHARSET e COLLATE dalla query
+    //rimuovo ENGINE, CHARSET e COLLATE dalla query
     $mysqlCreateStatement = preg_replace(
         ['/ENGINE=\w+/', '/DEFAULT CHARSET=\w+/', '/COLLATE=\w+/', '/AUTO_INCREMENT=\w+/'],
         '',
         $mysqlCreateStatement
     );
 
-    // Rimuovo eventuali spazi in più
+    //rimuovo eventuali spazi in più
     $mysqlCreateStatement = preg_replace('/\s+/', ' ', $mysqlCreateStatement);
 
-    // Sostituisco i tipi di dati
+    //sostituisco i tipi di dati
     foreach ($dataTypeMapping as $mysqlType => $postgresType) {
         $mysqlCreateStatement = preg_replace($mysqlType, $postgresType, $mysqlCreateStatement);
     }
 
-    // Rimuovo AUTO_INCREMENT rimasto
+    //rimuovo AUTO_INCREMENT non supportato
     $mysqlCreateStatement = preg_replace('/\bAUTO_INCREMENT\b/', '', $mysqlCreateStatement);
 
     return trim($mysqlCreateStatement);

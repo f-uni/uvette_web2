@@ -13,6 +13,7 @@ $table_param=preg_replace('/[^a-zA-Z0-9_]+/', '', $_GET["table"]);
 $statement=getCreateStatement($conn, $tables, $table_param);
 
 if($statement){
+    //leggo righe e colonne della tabella specificata
     $data=getTable($conn, $tables, $table_param);
     if($data){
         json_response(200, [

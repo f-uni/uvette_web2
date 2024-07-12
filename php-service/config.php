@@ -1,5 +1,6 @@
 <?php
 
+//dichiaro le tabelle esportabili
 $tables=[
     "domanda",
     "partecipazione",
