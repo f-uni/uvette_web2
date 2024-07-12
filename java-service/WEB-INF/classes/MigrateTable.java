@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+//servlet per la migrazione della tabella specificata nel parametro table
 public class MigrateTable extends HttpServlet {
 
     @Override
@@ -23,7 +23,7 @@ public class MigrateTable extends HttpServlet {
             return;
         }
         
-        //lettura parametri dal conrext della servlet
+        //lettura parametri dal context della servlet
         ServletContext context = getServletContext(); 
         String phpServiceUrl = context.getInitParameter("PHP_SERVICE_URL");
         String pythonServiceUrl = context.getInitParameter("PYTHON_SERVICE_URL");
@@ -32,7 +32,7 @@ public class MigrateTable extends HttpServlet {
             //lettura dei dati dal servizio php
             String json = MigrationUtil.getTableData(phpServiceUrl, table);
 
-            //invio dati al servizio django
+            //invio dati al servizio python
             String result = MigrationUtil.sendTableData(pythonServiceUrl, json);
 
             //invio risposta al client

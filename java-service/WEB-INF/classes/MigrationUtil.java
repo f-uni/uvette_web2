@@ -20,8 +20,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
+//classe util per la gestione della migrazione
 public class MigrationUtil {
     
+    //metodo per inviare risposta json al client
     public static void jsonResponse(int code, HttpServletResponse response, Map<String, Object> data) throws IOException{
         response.setStatus(code);
 		response.setContentType("application/json");
@@ -29,6 +31,7 @@ public class MigrationUtil {
         response.getWriter().println(gson.toJson(data));
     }
 
+    //metodo per leggere la tabelle disponibili nel servizio PHP
     public static List<String> getTables(String url){
         HttpURLConnection conn = null;
         BufferedReader reader = null;
@@ -76,6 +79,7 @@ public class MigrationUtil {
         return null;
     }
 
+    //metodo per leggere i dati della tabella dal servizio php
     public static String getTableData(String url, String table) throws PHPServiceException{
 
         HttpURLConnection conn = null;
@@ -130,6 +134,7 @@ public class MigrationUtil {
         
     }
 
+    //metodo per l'invio della tabella al servizio python
     public static String sendTableData(String url, String data) throws DjangoServiceException{
 
         HttpURLConnection conn = null;
@@ -193,12 +198,14 @@ public class MigrationUtil {
 
 }
 
+//classe per gestire gli errori nel servizio PHP
 class PHPServiceException extends Exception{
     public PHPServiceException(String message){
         super(message);
     }
 }
 
+//classe per gestire gli errori nel servizio python
 class DjangoServiceException extends Exception{
     public DjangoServiceException(String message){
         super(message.replaceAll("\n", " ").replaceAll("\"", ""));

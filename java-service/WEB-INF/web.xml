@@ -20,7 +20,7 @@
     <param-value>http://127.0.0.1:8000</param-value>
   </context-param>
 
-  <!-- MigrateTables -->
+  <!-- MigrateTable -->
   <servlet>
     <servlet-name>MigrateTable</servlet-name>
     <servlet-class>MigrateTable</servlet-class>
@@ -30,6 +30,8 @@
     <url-pattern>/MigrateTable</url-pattern>
   </servlet-mapping>
 
+  
+  <!-- FullMigration -->
   <servlet>
     <servlet-name>FullMigration</servlet-name>
     <servlet-class>FullMigration</servlet-class>

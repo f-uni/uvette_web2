@@ -11,22 +11,24 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-
+//servlet per gestire in automatico la migrazione di tutte le tabelle disponibili
 public class FullMigration extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
         
-        //lettura parametri dal conrext della servlet
+        //lettura parametri dal context della servlet
         ServletContext context = getServletContext(); 
         String phpServiceUrl = context.getInitParameter("PHP_SERVICE_URL");
         String pythonServiceUrl = context.getInitParameter("PYTHON_SERVICE_URL");
 
-        
+        //lista per i risultati
         List<Map<String,Object>> finalResult = new ArrayList<>();
 
+        //leggo la lista di tutte le tabelle disponibili dal servizio PHP
         List<String> tables = MigrationUtil.getTables(phpServiceUrl);
 
+        //gestisco errore lato server
         if(tables==null){
             MigrationUtil.jsonResponse(400, response, Map.of(
                 "php-errors", "unable to fetch tables"
@@ -35,14 +37,17 @@ public class FullMigration extends HttpServlet {
         }
 
         int errors = 0;
+
+        //per ogni tabella
         for(String table : tables){
             try {
-                //lettura dei dati dal servizio php
+                //lettura dei dati della tabella dal servizio php
                 String json = MigrationUtil.getTableData(phpServiceUrl, table);
 
-                //invio dati al servizio django
+                //invio dati al servizio python
                 String result = MigrationUtil.sendTableData(pythonServiceUrl, json);
-
+                
+                //parse risultato
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
                 finalResult.add(Map.of(
