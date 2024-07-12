@@ -2,16 +2,23 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
+
 import java.util.List;
 import java.util.Map;
+
+import java.lang.reflect.Type;
 
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 public class MigrationUtil {
     
@@ -43,12 +50,14 @@ public class MigrationUtil {
                 while ((line = reader.readLine()) != null) {
                     response.append(line);
                 }
-
+                //parse del json
                 Gson gson = new Gson();
-                @SuppressWarnings("rawtypes")
-                Map map = gson.fromJson(response.toString(), Map.class);
-                return (List<String>) map.get("tables");
-
+                JsonObject jsonObject = gson.fromJson(response.toString(), JsonObject.class);
+                JsonArray tablesArray = jsonObject.getAsJsonArray("tables");
+                //converto in lista di stringhe
+                Type listType = new TypeToken<List<String>>() {}.getType();
+                List<String> tableList = new Gson().fromJson(tablesArray, listType);
+                return tableList;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,7 +74,6 @@ public class MigrationUtil {
             }
         }
         return null;
-        
     }
 
     public static String getTableData(String url, String table) throws PHPServiceException{
@@ -101,9 +109,8 @@ public class MigrationUtil {
                     errorResponse.append(line);
                 }
                 Gson gson = new Gson();
-                @SuppressWarnings("rawtypes")
-                Map map = gson.fromJson(errorResponse.toString(), Map.class);
-                throw new PHPServiceException((String) map.get("error"));
+                JsonObject jsonObject = gson.fromJson(errorResponse.toString(), JsonObject.class);
+                throw new PHPServiceException(jsonObject.get("error").getAsString());
             }
         } catch (IOException e) {
             throw new PHPServiceException("Server Error");
@@ -130,7 +137,7 @@ public class MigrationUtil {
 
         try {
             //apro connessione
-            URL urlObj = new URL(url+"/sendTableData");
+            URL urlObj = new URL(url+"/importTable");
             conn = (HttpURLConnection) urlObj.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
@@ -154,7 +161,7 @@ public class MigrationUtil {
                 }
                 return response.toString();
 
-            //gestisto eventuali ettori lato server
+            //gestisto eventuali errori lato server
             } else if (responseCode == HttpURLConnection.HTTP_BAD_REQUEST || responseCode == HttpURLConnection.HTTP_INTERNAL_ERROR) {
                 reader = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
                 StringBuilder errorResponse = new StringBuilder();
@@ -163,12 +170,11 @@ public class MigrationUtil {
                     errorResponse.append(line);
                 }
                 Gson gson = new Gson();
-                @SuppressWarnings("rawtypes")
-                Map map = gson.fromJson(errorResponse.toString(), Map.class);
-                throw new DjangoServiceException((String) map.get("error"));
+                JsonObject jsonObject = gson.fromJson(errorResponse.toString(), JsonObject.class);
+                throw new DjangoServiceException(jsonObject.get("error").getAsString());
             }
         } catch (IOException e) {
-            throw new DjangoServiceException("Server Error");
+            throw new DjangoServiceException("Server Error, "+ e.toString());
         } finally {
             if (reader != null) {
                 try {
@@ -195,6 +201,6 @@ class PHPServiceException extends Exception{
 
 class DjangoServiceException extends Exception{
     public DjangoServiceException(String message){
-        super(message);
+        super(message.replaceAll("\n", " ").replaceAll("\"", ""));
     }
 }

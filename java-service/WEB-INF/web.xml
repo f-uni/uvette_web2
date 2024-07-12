@@ -16,11 +16,11 @@
     <param-value>https://fcolpani.altervista.org/api</param-value>
   </context-param>
   <context-param>
-    <param-name>DJANGO_SERVICE_URL</param-name>
-    <param-value>http://127.0.0.1:8081</param-value>
+    <param-name>PYTHON_SERVICE_URL</param-name>
+    <param-value>http://127.0.0.1:8000</param-value>
   </context-param>
 
-<!-- MigrateTables -->
+  <!-- MigrateTables -->
   <servlet>
     <servlet-name>MigrateTable</servlet-name>
     <servlet-class>MigrateTable</servlet-class>
@@ -28,6 +28,15 @@
   <servlet-mapping>
     <servlet-name>MigrateTable</servlet-name>
     <url-pattern>/MigrateTable</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>FullMigration</servlet-name>
+    <servlet-class>FullMigration</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FullMigration</servlet-name>
+    <url-pattern>/FullMigration</url-pattern>
   </servlet-mapping>
 
   <welcome-file-list>

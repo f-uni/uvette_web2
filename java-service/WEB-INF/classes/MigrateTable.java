@@ -26,19 +26,18 @@ public class MigrateTable extends HttpServlet {
         //lettura parametri dal conrext della servlet
         ServletContext context = getServletContext(); 
         String phpServiceUrl = context.getInitParameter("PHP_SERVICE_URL");
-        String djangoServiceUrl = context.getInitParameter("DJANGO_SERVICE_URL");
+        String pythonServiceUrl = context.getInitParameter("PYTHON_SERVICE_URL");
 
         try {
             //lettura dei dati dal servizio php
             String json = MigrationUtil.getTableData(phpServiceUrl, table);
 
             //invio dati al servizio django
-            MigrationUtil.sendTableData(djangoServiceUrl, json);
+            String result = MigrationUtil.sendTableData(pythonServiceUrl, json);
 
             //invio risposta al client
             MigrationUtil.jsonResponse(200, response, Map.of(
-                "message", "success",
-                "imported_rows", "0"
+                "message", result
             ));
 
         } catch (PHPServiceException e) {
