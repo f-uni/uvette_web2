@@ -1,5 +1,6 @@
 <?php
 
+//parametri di connessione
 $servername= "localhost";
 $username = "uvette";
 $dbname= "my_uvette";
