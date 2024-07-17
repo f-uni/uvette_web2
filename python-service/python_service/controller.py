@@ -13,7 +13,7 @@ def index(request):
 
 @csrf_exempt #disabilito i controlli csrf per l'invio di dati in POST
 def importTable(request):
-
+	#controllo il metodo della richiesta
 	if request.method == "POST":
 		try:
 			#leggo il json contente i dati
