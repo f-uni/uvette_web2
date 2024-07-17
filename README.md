@@ -2,6 +2,13 @@
 
 ## Analisi
 
+- ### PHP Web Service
+-  
+- 
+- https://uvette.altervista.org/php-service/api/getTableData.php?table={table}
+
+- ### JAVA Web Service
+    
 
 ## Istruzioni
 
@@ -11,7 +18,7 @@
 - ### java-service
     Contiene il web-service tomcat
 
-    - Installazione: copiare l'intera cartella nella cartella ``webapps`` del server Tomcat
+    - Installazione: copiare l'intera ``java-service`` cartella nella cartella ``webapps`` del server Tomcat
         se necessario ricompilare i file ``.java`` nella cartella ``WEB-INF/classes/`` con il comando
         ```bash
             javac  -cp "./WEB-INF/lib/*" ./WEB-INF/classes/*    
@@ -27,3 +34,7 @@
     ```
     
     - Configurazione: modificare i parametri di connessione al database postgres nel file ``python_service/settings.py`` ``(riga 74)``
+
+
+ ## Utilizzo
+
