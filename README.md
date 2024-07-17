@@ -26,4 +26,4 @@
         python .\manage.py runserver
     ```
     
-    - Configurazione: modificare i parametri di connessione al database postges nel file ``python_service/settings.py`` ``(riga 74)``
+    - Configurazione: modificare i parametri di connessione al database postgres nel file ``python_service/settings.py`` ``(riga 74)``
