@@ -1,18 +1,31 @@
 # Progetto WEB - Migrazione dati
 
 
+## Introduzione
+
+Il progetto prevede la migrazione di dati da un database remoto a uno locale utilizzando un sistema composto da tre servizi: un webservice remoto in PHP, un intermediario in Java e un webservice locale in Python/Django. L'obiettivo è garantire un trasferimento sicuro e generalizzato dei dati in formato JSON.
+
+
 ## Analisi
 
-Alla base del funzionamento del nostro sistema vi sono i seguenti principi:
-- Il DB locale che riceve i dati non deve necessariamente avere le tabelle che si vogliono importare, è quindi necessario esportare anche il create statement della tabella.
-- Generalizzare l’esportazione e l’importazione delle tabelle con un formato comune tra il servizio PHP e quello PYTHON, nel nostro caso un JSON strutturato ad hoc.
-- Mantenere sicuro il server PHP dichiarando le tabelle esportabili così che non venga esposto l’intero DB.
-Tutti e tre i servizi operano con protocollo HTTP e risposte in formato JSON
+### Principi di funzionamento 
+
+- **Esportazione della struttura del DB**: Il database locale non necessita delle tabelle predefinite; il servizio deve essere in grado di esportare anche il create statement delle tabelle.
+- **Formato comune**: L'esportazione e l'importazione delle tabelle devono avvenire tramite un formato comune tra il servizio PHP e quello PYTHON, nel nostro caso un JSON strutturato ad hoc.
+- **Sicurezza**: Il server PHP deve dichiarare esplicitamente le tabelle esportabili per evitare l'esposizione dell'intero database.
+- **Protocollo e formato**: Tutti i servizi operano con protocollo HTTP e le risposte sono in formato JSON.
 
 
 
+## Architettura
 
-## Funzionamento
+Il sistema è composto da tre componenti principali:
+1. **PHP Web Service**: Esporta i dati e la struttura delle tabelle.
+2. **Java Web Service**: Funziona da intermediario, comunicando con il webservice PHP e inoltrando i dati al servizio Python.
+3. **Python Web Service**: Importa i dati e crea le tabelle nel database locale.
+
+Di seguito verranno descritti nel dettaglio.
+
 
 - #### PHP Web Service
     - ##### Struttura progetto:
