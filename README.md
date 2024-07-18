@@ -10,10 +10,10 @@ Il progetto prevede la migrazione di dati da un database remoto a uno locale uti
 
 ### Principi di funzionamento 
 
-- **Esportazione della struttura del DB**: Il database locale non necessita delle tabelle predefinite; il servizio deve essere in grado di esportare anche il create statement delle tabelle.
-- **Formato comune**: L'esportazione e l'importazione delle tabelle devono avvenire tramite un formato comune tra il servizio PHP e quello PYTHON, nel nostro caso un JSON strutturato ad hoc.
-- **Sicurezza**: Il server PHP deve dichiarare esplicitamente le tabelle esportabili per evitare l'esposizione dell'intero database.
-- **Protocollo e formato**: Tutti i servizi operano con protocollo HTTP e le risposte sono in formato JSON.
+- **Esportazione della struttura del DB**: Il database locale non necessita che venga precedentemente definito lo schema delle tabelle, il servizio è in grado di esportare anche il create statement delle tabelle così da non incorrere in problemi quali la possibile disomogeneità tra schemi delle due tabelle anche in presenza di modificazioni allo schema delle tabelle del database remoto.
+- **Formato comune**: L'esportazione e l'importazione delle tabelle avvengono tramite un formato comune tra il servizio PHP e quello PYTHON, nel nostro caso è stato scelto un formato JSON strutturato ad hoc. Questo consente una migrazione più lineare e una minore elaborazione dei dati in quanto non ne è richiesta la traduzione da un formato ad un altro.
+- **Sicurezza**: Il server PHP dichiara esplicitamente le tabelle esportabili in modo che si eviti l'esposizione dell'intero database, così facendo si previene l'esportazione di dati che si presuppone non siano accessibili a chiunque.
+- **Protocollo e formato**: Tutti i servizi operano con protocollo HTTP e le risposte sono in formato JSON. Questo permette una comunicazione più _[inserire aggettivo]_ tra i diversi web services.
 
 
 
